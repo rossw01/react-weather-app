@@ -1,3 +1,75 @@
 body {
 	background-color: rgb(220, 220, 220);
 }
+
+.box {
+	padding: 1rem;
+}
+
+.row-fb {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+}
+
+.col-fb {
+	display: flex;
+	flex-direction: column;
+}
+
+.gap {
+	gap: 0.5rem;
+}
+
+.mg-0 {
+	margin: 0px;
+}
+
+.centered {
+	align-items: center;
+	justify-content: center;
+}
+
+.selected-location {
+	font-size: 24px;
+	margin-bottom: 0.5rem;
+}
+
+.date {
+	margin-top: 0rem;
+	margin-bottom: 1rem;
+}
+
+.current-temperature {
+	font-size: 52px;
+	margin: 0 0 0 0.4rem;
+}
+
+.weather-icon {
+	width: 8rem;
+	height: 8rem;
+}
+
+.line {
+	width: 0.1px;
+	height: 1rem;
+}
+
+.wind-icon {
+	width: 1.8rem;
+}
+
+.temp-arrow-icon {
+	width: 1.6rem;
+}
+
+.icon-filter {
+	filter: opacity(70%);
+}
+
+.summary-windspeed {
+	margin-top: 1rem;
+	gap: 2.4rem;
+	margin-bottom: 2rem;
+	margin-right: 0.8rem;
+}
