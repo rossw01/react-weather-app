@@ -1,6 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./today.css";
+import DownIcon from "./media/down.svg";
+import UpIcon from "./media/up.svg";
+import WindIcon from "./media/windspeed.svg";
+import "./Today.css";
+
+const capitalizeFirstLetters = (string) => {
+	// Capitalises first letter of each words in string
+	let arr = string.split(" ").map((word) => {
+		return word.charAt(0).toUpperCase() + word.slice(1);
+	});
+	return arr.join(" ");
+};
 
 const kelvinToCelcius = (kelvin) => {
 	return parseFloat(kelvin - 273.15).toFixed(1);
@@ -68,21 +79,54 @@ const Today = () => {
 	// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 	return (
-		<div>
-			<h2>Today's forecast:</h2>
-			<p className="date">{generateDateString()}</p>
-			<p className="current-temperature">
-				Current Temperature: {temperature}°C
-			</p>
-			<p className="selected-location">{location}</p>
-			<p className="summary-text">{summary}</p>
-			<p className="min-temp">Min temp: {minmaxTemp.min}°C</p>
-			<p className="max-temp">Max temp: {minmaxTemp.max}°C</p>
-			<p className="wind-speed">Wind speed: {windSpeed} MPH</p>
-			<img
-				src={`http://openweathermap.org/img/wn/${iconId}@2x.png`}
-				alt={`${summary} icon`}
-			/>
+		<div className="box">
+			<div>
+				<div className="col-fb centered">
+					<p className="selected-location">{location}</p>
+					<p className="date">{generateDateString().slice(0, -4)}</p>
+					<div className="row-fb">
+						<img
+							className="weather-icon"
+							src={`http://openweathermap.org/img/wn/${iconId}@2x.png`}
+							alt={`${capitalizeFirstLetters(summary)} icon`}
+						/>
+						<div className="col-fb">
+							<p className="current-temperature">{temperature}°C</p>
+							<div className="row-fb gap centered">
+								<div className="row-fb">
+									<img
+										className="temp-arrow-icon icon-filter"
+										src={UpIcon}
+										alt="max-temp icon"
+									/>
+									<p className="max-temp mg-0">{minmaxTemp.max}°C</p>
+								</div>
+								<div className="row-fb">
+									<img
+										className="temp-arrow-icon icon-filter"
+										src={DownIcon}
+										alt="min-temp icon"
+									/>
+									<p className="min-temp mg-0">{minmaxTemp.min}°C</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="row-fb summary-windspeed">
+						<p className="summary-text mg-0">
+							{capitalizeFirstLetters(summary)}
+						</p>
+						<div className="row-fb gap">
+							<img
+								className="wind-icon icon-filter"
+								src={WindIcon}
+								alt="windspeed icon"
+							/>
+							<p className="wind-speed mg-0">{windSpeed} MPH</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
