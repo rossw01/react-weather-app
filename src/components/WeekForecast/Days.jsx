@@ -18,7 +18,6 @@ const Days = () => {
 
 	const fetchWeatherRequest = async () => {
 		let fetched = await axios.get(url);
-		console.log(fetched.data.list);
 		// console.log(fetched);
 		changeDays(fetched.data.list);
 	};

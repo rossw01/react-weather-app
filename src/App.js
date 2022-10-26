@@ -6,7 +6,16 @@ import Days from "./components/WeekForecast/Days";
 function App() {
 	return (
 		<>
-			<h1>Weather App</h1>
+			<div class="row-fb">
+				<h1>Weather App</h1>
+				<form>
+					<label>
+						Location:
+						<input type="text" name="location" />
+					</label>
+					<input type="submit" value="Search" />
+				</form>
+			</div>
 			<Today />
 			<Days />
 		</>
