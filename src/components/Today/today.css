@@ -3,7 +3,7 @@ body {
 }
 
 .box {
-	padding: 1rem;
+	padding: 2rem;
 }
 
 .row-fb {
@@ -68,8 +68,12 @@ body {
 }
 
 .summary-windspeed {
-	margin-top: 1rem;
+	margin: 1rem 0.8rem 2rem 0;
 	gap: 2.4rem;
-	margin-bottom: 2rem;
-	margin-right: 0.8rem;
+}
+
+.glassbox {
+	padding-inline: 2rem;
+	border-radius: 20px;
+	backdrop-filter: blur(3px) brightness(0.95);
 }

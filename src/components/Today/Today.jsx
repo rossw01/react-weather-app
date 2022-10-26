@@ -53,8 +53,24 @@ const Today = () => {
 	// const part = "current";
 	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
+	// const setDynamicBackground = () => {
+	// 	console.log(summary);
+	// 	if (summary === "broken clouds") {
+	// 		changeBackground({
+	// 			backgroundImage: url("../../bg/clouds.svg"),
+	// 			border: "solid 2px yellow",
+	// 		});
+	// 	} else {
+	// 		changeBackground({
+	// 			background: "red",
+	// 		});
+	// 	}
+	// 	console.log("Should change bg");
+	// };
+
 	const fetchWeatherRequest = async () => {
 		let response = await axios.get(url);
+
 		changeWindSpeed(response.data.wind.speed);
 		changeTemperature(kelvinToCelcius(response.data.main.temp));
 		changeLocation(response.data.name);
@@ -64,11 +80,20 @@ const Today = () => {
 			max: kelvinToCelcius(response.data.main.temp_max),
 		});
 		changeIconId(response.data.weather[0].icon);
+		// setDynamicBackground();
 	};
 
 	useEffect(() => {
 		fetchWeatherRequest();
 	}, []);
+
+	/*
+	useEffect(() => {
+		
+	}, [summary]);
+	// On summary state change...
+
+	*/
 
 	// console.log(response.data);
 
@@ -79,9 +104,19 @@ const Today = () => {
 	// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 	return (
-		<div className="box">
-			<div>
-				<div className="col-fb centered">
+		<div
+			className="box"
+			style={
+				["broken clouds", "few clouds"].includes(summary)
+					? {
+							backgroundImage: `url("https://images.pexels.com/photos/165488/pexels-photo-165488.jpeg")`,
+					  }
+					: { backgroundColor: "red" }
+			}
+			// https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg Sunny pic
+		>
+			<div className="col-fb centered">
+				<div className="col-fb glassbox">
 					<p className="selected-location">{location}</p>
 					<p className="date">{generateDateString().slice(0, -4)}</p>
 					<div className="row-fb">
@@ -112,7 +147,7 @@ const Today = () => {
 							</div>
 						</div>
 					</div>
-					<div className="row-fb summary-windspeed">
+					<div className="row-fb summary-windspeed centered">
 						<p className="summary-text mg-0">
 							{capitalizeFirstLetters(summary)}
 						</p>
