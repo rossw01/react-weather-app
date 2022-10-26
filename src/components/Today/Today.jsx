@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DownIcon from "./media/down.svg";
+import SearchIcon from "./media/search.svg";
 import UpIcon from "./media/up.svg";
 import WindIcon from "./media/windspeed.svg";
 import "./Today.css";
@@ -40,6 +41,7 @@ const generateDateString = () => {
 // };
 
 const Today = () => {
+	const [inputtedLocation, changeInputtedLocation] = useState("");
 	const [location, changeLocation] = useState("");
 	const [temperature, changeTemperature] = useState(0);
 	const [summary, changeSummary] = useState("");
@@ -47,10 +49,14 @@ const Today = () => {
 	const [windSpeed, changeWindSpeed] = useState(0);
 	const [iconId, changeIconId] = useState(0);
 	const [background, changeBackground] = useState({ backgroundImage: "" });
+	const [lat, changeLat] = useState(51.5);
+	const [lon, changeLon] = useState(0.13);
 
 	const apiKey = process.env.REACT_APP_API_KEY;
-	const lat = 50.23;
-	const lon = 2.54;
+
+	// Generate these from location...
+	//
+
 	// const part = "current";
 	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
@@ -161,7 +167,6 @@ const Today = () => {
 
 	const fetchWeatherRequest = async () => {
 		let response = await axios.get(url);
-
 		changeWindSpeed(response.data.wind.speed);
 		changeTemperature(kelvinToCelcius(response.data.main.temp));
 		changeLocation(response.data.name);
@@ -174,6 +179,30 @@ const Today = () => {
 		// setDynamicBackground();
 	};
 
+	const fetchNewLonLat = async (newLocation) => {
+		console.log(newLocation);
+		let response = await axios.get(
+			`http://api.openweathermap.org/geo/1.0/direct?q=${newLocation}&appid=${apiKey}`
+		);
+		console.log(response);
+		if (response.status === 200 && response.data.length !== 0) {
+			changeLat(response.data[0].lat);
+			changeLon(response.data[0].lon);
+		} else {
+			if (response.data.length === 0) {
+				alert(
+					`${newLocation} could not be found! Please try again with a new location`
+				);
+			} else {
+				alert(
+					`${response.status}, failed to update weather forecast! Check the console for more details.`
+				);
+			}
+			// TODO: Make this work...
+		}
+		// changeLon(response.data.lon)
+	};
+
 	useEffect(() => {
 		fetchWeatherRequest();
 	}, []);
@@ -181,6 +210,11 @@ const Today = () => {
 	useEffect(() => {
 		setDynamicBackground();
 	}, [summary]);
+
+	useEffect(() => {
+		fetchWeatherRequest();
+	}, [lon]);
+
 	// On summary state change...
 
 	// console.log(response.data);
@@ -191,6 +225,11 @@ const Today = () => {
 	// Geocoding API
 	// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		fetchNewLonLat(inputtedLocation);
+	};
+
 	return (
 		<div
 			className="box"
@@ -198,6 +237,29 @@ const Today = () => {
 			// https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg Sunny pic
 		>
 			<div className="col-fb centered">
+				<form onSubmit={handleSubmit}>
+					<div className="row-fb gap">
+						<input
+							className="search"
+							type="text"
+							name="location"
+							value={inputtedLocation}
+							onChange={(input) => changeInputtedLocation(input.target.value)}
+						/>
+						<button
+							disabled={inputtedLocation.length === 0 ? true : false}
+							className="submit-button search"
+							type="submit"
+						>
+							<img
+								style={{ height: "20px", width: "20px" }}
+								src={SearchIcon}
+								alt="Search"
+							></img>
+						</button>
+					</div>
+				</form>
+
 				<div className="col-fb glassbox">
 					<p className="selected-location white-colour">{location}</p>
 					<p className="date white-colour">
