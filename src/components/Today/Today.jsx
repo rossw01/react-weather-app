@@ -46,27 +46,118 @@ const Today = () => {
 	const [minmaxTemp, changeMinmaxTemp] = useState({ min: 0, max: 0 });
 	const [windSpeed, changeWindSpeed] = useState(0);
 	const [iconId, changeIconId] = useState(0);
+	const [background, changeBackground] = useState({ backgroundImage: "" });
 
 	const apiKey = process.env.REACT_APP_API_KEY;
-	const lat = 51.5072;
-	const lon = 0.1276;
+	const lat = 50.23;
+	const lon = 2.54;
 	// const part = "current";
 	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-	// const setDynamicBackground = () => {
-	// 	console.log(summary);
-	// 	if (summary === "broken clouds") {
-	// 		changeBackground({
-	// 			backgroundImage: url("../../bg/clouds.svg"),
-	// 			border: "solid 2px yellow",
-	// 		});
-	// 	} else {
-	// 		changeBackground({
-	// 			background: "red",
-	// 		});
-	// 	}
-	// 	console.log("Should change bg");
-	// };
+	const setDynamicBackground = () => {
+		// If array of summaries matches current summary...
+		if (
+			// CLOUDS group
+			[
+				"broken clouds",
+				"few clouds",
+				"overcast clouds",
+				"scattered clouds",
+			].includes(summary)
+		) {
+			changeBackground({
+				backgroundImage: `url("https://images.pexels.com/photos/165488/pexels-photo-165488.jpeg")`,
+			});
+			// Set new image background for Today component
+		} else if (["clear sky"].includes(summary)) {
+			// CLEARSKY group
+			changeBackground({
+				backgroundImage: `url("https://images.pexels.com/photos/6479787/pexels-photo-6479787.jpeg")`,
+			});
+		} else if (
+			// ATMOSPHERE group
+			[
+				"mist",
+				"Smoke",
+				"Haze",
+				"sand/ dust whirls",
+				"fog",
+				"sand",
+				"dust",
+				"volcanic ash",
+				"squalls",
+				"tornado",
+			].includes(summary)
+		) {
+			changeBackground({
+				backgroundImage: `url("https://wallpaperaccess.com/full/1876175.jpg")`,
+			});
+		} else if (
+			// SNOW group
+			[
+				"light snow",
+				"Snow",
+				"Heavy snow",
+				"Sleet",
+				"Light shower sleet",
+				"Shower sleet",
+				"Light rain and snow",
+				"Rain and snow",
+				"Light shower snow",
+				"Shower snow",
+				"Heavy shower snow",
+			].includes(summary)
+		) {
+			changeBackground({
+				backgroundImage: `url("https://images.pexels.com/photos/954713/pexels-photo-954713.jpeg")`,
+			});
+		} else if (
+			// RAIN/DRIZZLE group
+			[
+				"light rain",
+				"moderate rain",
+				"heavy intensity rain",
+				"very heavy rain",
+				"extreme rain",
+				"freezing rain",
+				"light intensity shower rain",
+				"shower rain",
+				"heavy intensity shower rain",
+				"ragged shower rain",
+				"light intensity drizzle",
+				"drizzle",
+				"heavy intensity drizzle",
+				"light intensity drizzle rain",
+				"drizzle rain",
+				"heavy intensity drizzle rain",
+				"shower rain and drizzle",
+				"heavy shower rain and drizzle",
+				"shower drizzle",
+			].includes(summary)
+		) {
+			changeBackground({
+				backgroundImage: `url("https://wallpaperaccess.com/full/164284.jpg")`,
+			});
+		} else if (
+			// THUNDERSTORM group
+			[
+				"thunderstorm with light rain",
+				"thunderstorm with rain",
+				"thunderstorm with heavy rain",
+				"light thunderstorm",
+				"thunderstorm",
+				"heavy thunderstorm",
+				"ragged thunderstorm",
+				"thunderstorm with light drizzle",
+				"thunderstorm with drizzle",
+				"thunderstorm with heavy drizzle",
+			].includes(summary)
+		) {
+			changeBackground({
+				backgroundImage: `url("https://images.pexels.com/photos/3960211/pexels-photo-3960211.jpeg")`,
+			});
+		}
+	};
 
 	const fetchWeatherRequest = async () => {
 		let response = await axios.get(url);
@@ -87,13 +178,10 @@ const Today = () => {
 		fetchWeatherRequest();
 	}, []);
 
-	/*
 	useEffect(() => {
-		
+		setDynamicBackground();
 	}, [summary]);
 	// On summary state change...
-
-	*/
 
 	// console.log(response.data);
 
@@ -106,19 +194,15 @@ const Today = () => {
 	return (
 		<div
 			className="box"
-			style={
-				["broken clouds", "few clouds"].includes(summary)
-					? {
-							backgroundImage: `url("https://images.pexels.com/photos/165488/pexels-photo-165488.jpeg")`,
-					  }
-					: { backgroundColor: "red" }
-			}
+			style={{ backgroundImage: background.backgroundImage }}
 			// https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg Sunny pic
 		>
 			<div className="col-fb centered">
 				<div className="col-fb glassbox">
-					<p className="selected-location">{location}</p>
-					<p className="date">{generateDateString().slice(0, -4)}</p>
+					<p className="selected-location white-colour">{location}</p>
+					<p className="date white-colour">
+						{generateDateString().slice(0, -4)}
+					</p>
 					<div className="row-fb">
 						<img
 							className="weather-icon"
@@ -126,11 +210,13 @@ const Today = () => {
 							alt={`${capitalizeFirstLetters(summary)} icon`}
 						/>
 						<div className="col-fb">
-							<p className="current-temperature">{temperature}°C</p>
-							<div className="row-fb gap centered">
+							<p className="current-temperature white-colour">
+								{temperature}°C
+							</p>
+							<div className="row-fb gap centered white-colour">
 								<div className="row-fb">
 									<img
-										className="temp-arrow-icon icon-filter"
+										className="temp-arrow-icon icon-filter inverted"
 										src={UpIcon}
 										alt="max-temp icon"
 									/>
@@ -138,7 +224,7 @@ const Today = () => {
 								</div>
 								<div className="row-fb">
 									<img
-										className="temp-arrow-icon icon-filter"
+										className="temp-arrow-icon icon-filter inverted"
 										src={DownIcon}
 										alt="min-temp icon"
 									/>
@@ -148,16 +234,16 @@ const Today = () => {
 						</div>
 					</div>
 					<div className="row-fb summary-windspeed centered">
-						<p className="summary-text mg-0">
+						<p className="summary-text mg-0 white-colour">
 							{capitalizeFirstLetters(summary)}
 						</p>
 						<div className="row-fb gap">
 							<img
-								className="wind-icon icon-filter"
+								className="wind-icon icon-filter inverted"
 								src={WindIcon}
 								alt="windspeed icon"
 							/>
-							<p className="wind-speed mg-0">{windSpeed} MPH</p>
+							<p className="wind-speed mg-0 white-colour">{windSpeed} MPH</p>
 						</div>
 					</div>
 				</div>
