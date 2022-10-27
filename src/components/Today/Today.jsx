@@ -23,24 +23,8 @@ const generateDateString = () => {
 	let date = new Date();
 	return date.toString().substring(0, 15);
 };
-// const fetchWeatherData = async (
-// 	url,
-// 	changeTemperature,
-// 	changeLocation,
-// 	changeSummary,
-// 	changeMinmaxTemp
-// ) => {
-// 	let response = await axios.get(url);
-// 	changeTemperature(kelvinToCelcius(response.data.main.temp));
-// 	changeLocation(response.data.name);
-// 	changeSummary(response.data.weather[0].description);
-// 	changeMinmaxTemp({
-// 		min: kelvinToCelcius(response.data.main.temp_min),
-// 		max: kelvinToCelcius(response.data.main.temp_max),
-// 	});
-// };
 
-const Today = () => {
+const Today = (props) => {
 	const [inputtedLocation, changeInputtedLocation] = useState("");
 	const [location, changeLocation] = useState("");
 	const [temperature, changeTemperature] = useState(0);
@@ -49,8 +33,10 @@ const Today = () => {
 	const [windSpeed, changeWindSpeed] = useState(0);
 	const [iconId, changeIconId] = useState(0);
 	const [background, changeBackground] = useState({ backgroundImage: "" });
-	const [lat, changeLat] = useState(51.5);
-	const [lon, changeLon] = useState(0.13);
+	const [lat, changeLat] = useState(props.initialLat);
+	const [lon, changeLon] = useState(props.initialLon);
+	console.log(lat);
+	console.log(lon);
 
 	const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -84,8 +70,8 @@ const Today = () => {
 			// ATMOSPHERE group
 			[
 				"mist",
-				"Smoke",
-				"Haze",
+				"smoke",
+				"haze",
 				"sand/ dust whirls",
 				"fog",
 				"sand",
@@ -102,16 +88,16 @@ const Today = () => {
 			// SNOW group
 			[
 				"light snow",
-				"Snow",
-				"Heavy snow",
-				"Sleet",
-				"Light shower sleet",
-				"Shower sleet",
-				"Light rain and snow",
-				"Rain and snow",
-				"Light shower snow",
-				"Shower snow",
-				"Heavy shower snow",
+				"snow",
+				"heavy snow",
+				"sleet",
+				"light shower sleet",
+				"shower sleet",
+				"light rain and snow",
+				"rain and snow",
+				"light shower snow",
+				"shower snow",
+				"heavy shower snow",
 			].includes(summary)
 		) {
 			changeBackground({
@@ -180,11 +166,9 @@ const Today = () => {
 	};
 
 	const fetchNewLonLat = async (newLocation) => {
-		console.log(newLocation);
 		let response = await axios.get(
 			`http://api.openweathermap.org/geo/1.0/direct?q=${newLocation}&appid=${apiKey}`
 		);
-		console.log(response);
 		if (response.status === 200 && response.data.length !== 0) {
 			changeLat(response.data[0].lat);
 			changeLon(response.data[0].lon);
@@ -203,27 +187,22 @@ const Today = () => {
 		// changeLon(response.data.lon)
 	};
 
+	// Fetch weather on page load...
 	useEffect(() => {
 		fetchWeatherRequest();
 	}, []);
 
+	// When summary state is changed (during fetch), display new background
 	useEffect(() => {
 		setDynamicBackground();
 	}, [summary]);
 
+	// When lon is fetched from geolocation api, change Lat/Lon in App.js and fetch weather again
 	useEffect(() => {
+		props.changeCurrentLat(lat);
+		props.changeCurrentLon(lon);
 		fetchWeatherRequest();
 	}, [lon]);
-
-	// On summary state change...
-
-	// console.log(response.data);
-
-	// Weather API
-	// https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}
-
-	// Geocoding API
-	// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
