@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./components/Today/Today";
 import Today from "./components/Today/Today";
 import Days from "./components/WeekForecast/Days";
 
 function App() {
-	// const [location, changeLocation] = useState("");
-
-	// const handleSubmit = (event) => {
-	// 	event.preventDefault();
-	// 	console.log(`${location}`);
-	// };
+	// Values are set from Today.js
+	const [currentLat, changeCurrentLat] = useState(5.15);
+	const [currentLon, changeCurrentLon] = useState(0.15);
 
 	return (
 		<>
-			<Today location="location" />
-			<Days />
+			<Today
+				initialLat={currentLat}
+				initialLon={currentLon}
+				changeCurrentLat={changeCurrentLat}
+				changeCurrentLon={changeCurrentLon}
+			/>
+			<Days lat={currentLat} lon={currentLon} />
 		</>
 	);
 }

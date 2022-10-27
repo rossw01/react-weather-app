@@ -8,12 +8,12 @@ const kelvinToCelcius = (kelvin) => {
 	// TODO: Try limit decimal to .5
 };
 
-const Days = () => {
+const Days = (props) => {
 	const [days, changeDays] = useState([]);
+	const [lat, changeLat] = useState(props.lat);
+	const [lon, changeLon] = useState(props.lon);
 
 	const apiKey = process.env.REACT_APP_API_KEY;
-	const lat = 51.5072;
-	const lon = 0.1276;
 	let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
 	const fetchWeatherRequest = async () => {
@@ -48,9 +48,22 @@ const Days = () => {
 		return existingDays;
 	};
 
+	const setNewLatLon = () => {
+		changeLat(props.lat);
+		changeLon(props.lon);
+	};
+
 	useEffect(() => {
 		fetchWeatherRequest();
 	}, []);
+
+	useEffect(() => {
+		// FIXME: Not being activated on props.currentLocation change
+
+		// On inputted location change by the user, fetch again...
+		setNewLatLon();
+		fetchWeatherRequest();
+	}, [props.lat]);
 
 	return (
 		<div>
