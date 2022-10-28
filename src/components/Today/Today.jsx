@@ -187,6 +187,16 @@ const Today = (props) => {
 		// changeLon(response.data.lon)
 	};
 
+	const getLocation = () => {
+		console.log(navigator);
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				changeLat(position.coords.latitude);
+				changeLon(position.coords.longitude);
+			});
+		}
+	};
+
 	// Fetch weather on page load...
 	useEffect(() => {
 		fetchWeatherRequest();
@@ -215,29 +225,41 @@ const Today = (props) => {
 			style={{ backgroundImage: background.backgroundImage }}
 			// https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg Sunny pic
 		>
-			<div className="col-fb centered">
-				<form onSubmit={handleSubmit}>
-					<div className="row-fb gap">
-						<input
-							className="search"
-							type="text"
-							name="location"
-							value={inputtedLocation}
-							onChange={(input) => changeInputtedLocation(input.target.value)}
-						/>
-						<button
-							disabled={inputtedLocation.length === 0 ? true : false}
-							className="submit-button search"
-							type="submit"
-						>
-							<img
-								style={{ height: "20px", width: "20px" }}
-								src={SearchIcon}
-								alt="Search"
-							></img>
-						</button>
-					</div>
-				</form>
+			<div className="col-fb centered gap">
+				<div className="row-fb gap">
+					<form onSubmit={handleSubmit}>
+						<div className="row-fb gap">
+							<input
+								className="search"
+								type="text"
+								name="location"
+								value={inputtedLocation}
+								onChange={(input) => changeInputtedLocation(input.target.value)}
+							/>
+							<button
+								disabled={inputtedLocation.length === 0 ? true : false}
+								className="round-button search"
+								type="submit"
+							>
+								<img
+									style={{ height: "20px", width: "20px" }}
+									src={SearchIcon}
+									alt="Search"
+								></img>
+							</button>
+						</div>
+					</form>
+					<button
+						onClick={getLocation}
+						className="round-button search location"
+					>
+						<img
+							style={{ height: "20px", width: "20px" }}
+							src="https://img.icons8.com/pastel-glyph/344/worldwide-location--v1.png"
+							alt="Search"
+						></img>
+					</button>
+				</div>
 
 				<div className="col-fb glassbox">
 					<p className="selected-location white-colour">{location}</p>

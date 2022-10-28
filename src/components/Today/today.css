@@ -3,7 +3,7 @@ body {
 }
 
 .box {
-	padding: 2rem;
+	padding: 2rem 2rem 1.5vw 2rem;
 }
 
 .row-fb {
@@ -25,11 +25,6 @@ body {
 	margin: 0px;
 }
 
-.centered {
-	align-items: center;
-	justify-content: center;
-}
-
 /* Search and button div */
 .search {
 	color: black;
@@ -43,14 +38,17 @@ body {
 }
 
 /* Just the individual searchbar/submit elements */
-.submit-button {
+.round-button {
 	border-radius: 90px;
 	height: 2rem;
 	width: 2rem;
+	transition: all ease-in-out 0.25s;
 }
 
-.submit-button:hover {
+.round-button:hover {
 	cursor: pointer;
+	transform: scale(110%);
+	filter: drop-shadow(5px 5px 12px black);
 }
 
 .selected-location {
@@ -96,7 +94,7 @@ body {
 }
 
 .glassbox {
-	margin: 2rem 0 2rem 0;
+	margin: 1rem 0 1rem 0;
 	padding-inline: 2rem;
 	border-radius: 20px;
 	backdrop-filter: blur(5px) brightness(0.9);

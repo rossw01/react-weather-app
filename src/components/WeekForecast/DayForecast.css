@@ -30,7 +30,24 @@
 	margin-top: 1rem;
 }
 
-@media screen and (max-width: 700px) {
+.minh-3 {
+	min-height: 3rem;
+}
+
+.summary {
+	min-height: 3rem;
+}
+
+.weather-img {
+	margin-inline: auto;
+	max-height: 150px;
+	max-width: 150px;
+}
+
+@media screen and (max-width: 728px) {
+	.summary {
+		max-width: 4rem;
+	}
 	.card {
 		margin-inline: 0.5rem;
 		justify-content: center;
