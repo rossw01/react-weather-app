@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-weather-app/static/css/main.276b0b11.css",
-    "main.js": "/react-weather-app/static/js/main.975b902c.js",
+    "main.js": "/react-weather-app/static/js/main.eba2d070.js",
     "static/js/787.d9312eb8.chunk.js": "/react-weather-app/static/js/787.d9312eb8.chunk.js",
     "static/media/windspeed.svg": "/react-weather-app/static/media/windspeed.55e017ebb392b82991276c08b53ac065.svg",
     "static/media/search.svg": "/react-weather-app/static/media/search.8ba70498aba2a092b91c49bce73a52a3.svg",
@@ -9,11 +9,11 @@
     "static/media/down.svg": "/react-weather-app/static/media/down.9c93c8f3c840d32624ab3f347a6c8433.svg",
     "static/media/up.svg": "/react-weather-app/static/media/up.c713ff71375eecc5e10ec119abe9aa6b.svg",
     "main.276b0b11.css.map": "/react-weather-app/static/css/main.276b0b11.css.map",
-    "main.975b902c.js.map": "/react-weather-app/static/js/main.975b902c.js.map",
+    "main.eba2d070.js.map": "/react-weather-app/static/js/main.eba2d070.js.map",
     "787.d9312eb8.chunk.js.map": "/react-weather-app/static/js/787.d9312eb8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.276b0b11.css",
-    "static/js/main.975b902c.js"
+    "static/js/main.eba2d070.js"
   ]
 }
