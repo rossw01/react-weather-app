@@ -1,4 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&family=Varela+Round&display=swap");
+
+* {
+	font-family: "Varela Round", monospace;
+	font-weight: 400;
+}
+
+.footer {
+	margin-top: 4.5rem;
+	display: flex;
+}
+
+.centered {
+	align-items: center;
+	justify-content: center;
+}
+
 .row-fb {
 	display: flex;
 	flex: row;
+}
+
+@media screen and (max-width: 700px) {
+	.footer {
+		margin-top: 1rem;
+	}
 }

@@ -18,6 +18,7 @@ function App() {
 				changeCurrentLon={changeCurrentLon}
 			/>
 			<Days lat={currentLat} lon={currentLon} />
+			<p className="footer centered"> © Diana, Ross, Viorel - 2022</p>
 		</>
 	);
 }

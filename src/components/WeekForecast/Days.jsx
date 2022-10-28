@@ -29,7 +29,7 @@ const Days = (props) => {
 				// Get the dateTime string, then check the last 8 chars (the time) against midday "12:00:00"
 				return day.dt_txt.slice(-8) === "12:00:00";
 				// Filter out all results besides midday results
-				// TODO: This is going to show the same day as today if the program is run before midday :(
+				// FIXME: This is going to show the same day as today if the program is run before midday :(
 			})
 			.map((day, i) => {
 				return (
